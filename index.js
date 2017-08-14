@@ -47,3 +47,63 @@ placeNumberAtRandomFreePosition(2);
 placeNumberAtRandomFreePosition(2);
 
 console.log("final playingField",playingField);
+
+
+function drawField()
+{
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.moveTo(100,0);
+ctx.lineTo(100,400);
+ctx.strokeStyle="green";
+ctx.stroke();
+
+var ctx2 = c.getContext("2d");
+ctx2.moveTo(200,0);
+ctx2.lineTo(200,400);
+ctx2.strokeStyle="green";
+ctx2.stroke();
+
+var ctx3 = c.getContext("2d");
+ctx3.moveTo(300,0);
+ctx3.lineTo(300,400);
+ctx3.strokeStyle="green";
+ctx3.stroke();
+
+var ctx4 = c.getContext("2d");
+ctx4.moveTo(0,100);
+ctx4.lineTo(400,100);
+ctx4.strokeStyle="green";
+ctx4.stroke();
+
+var ctx5 = c.getContext("2d");
+ctx5.moveTo(0,200);
+ctx5.lineTo(400,200);
+ctx5.strokeStyle="green";
+ctx5.stroke();
+
+var ctx6 = c.getContext("2d");
+ctx6.moveTo(0,300);
+ctx6.lineTo(400,300);
+ctx6.strokeStyle="green";
+ctx6.stroke();
+}
+
+function run()
+{
+	var c2 = document.getElementById("myCanvas");
+    var ctx7 = c2.getContext("2d");
+    var img = document.getElementById("scream");
+    ctx7.drawImage(img,0,0,99,99);
+    ctx7.drawImage(img,101,101,99,99);
+    
+};
+
+drawField();
+
+
+
+
+
+
+
