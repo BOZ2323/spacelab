@@ -93,9 +93,14 @@ function run()
 {
 	var c2 = document.getElementById("myCanvas");
     var ctx7 = c2.getContext("2d");
-    var img = document.getElementById("scream");
-    ctx7.drawImage(img,0,0,99,99);
-    ctx7.drawImage(img,101,101,99,99);
+	
+	ctx7.fillStyle = "#41f341"
+	ctx7.fillRect(0,0,99,99);
+	
+	ctx7.font = "50px Arial";
+	ctx7.fillStyle = "green";
+	ctx7.fillText("2",35,65);
+	
     
 };
 
