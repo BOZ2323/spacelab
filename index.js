@@ -51,42 +51,29 @@ console.log("final playingField",playingField);
 
 function drawField()
 {
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-ctx.moveTo(100,0);
-ctx.lineTo(100,400);
-ctx.strokeStyle="green";
-ctx.stroke();
+	var c = document.getElementById("myCanvas");
+	var ctx = c.getContext("2d");
+	
+	for (var i = 0; i < 3; i++)
+	{
+		var positionX = 100 + (100 * i);
+		ctx.moveTo(positionX,0);
+		ctx.lineTo(positionX,400);
+		ctx.strokeStyle="green";
+		ctx.lineWidth = "8";
+		ctx.stroke();
+	}
+	
+	for (var j = 0; j < 3; j++)
+	{
+		var positionY = 100 + (100 * j);
+		ctx.moveTo(0,positionY);
+		ctx.lineTo(400, positionY);
+		ctx.strokeStyle="green";
+		ctx.lineWidth = "8";
+		ctx.stroke();
+	}
 
-var ctx2 = c.getContext("2d");
-ctx2.moveTo(200,0);
-ctx2.lineTo(200,400);
-ctx2.strokeStyle="green";
-ctx2.stroke();
-
-var ctx3 = c.getContext("2d");
-ctx3.moveTo(300,0);
-ctx3.lineTo(300,400);
-ctx3.strokeStyle="green";
-ctx3.stroke();
-
-var ctx4 = c.getContext("2d");
-ctx4.moveTo(0,100);
-ctx4.lineTo(400,100);
-ctx4.strokeStyle="green";
-ctx4.stroke();
-
-var ctx5 = c.getContext("2d");
-ctx5.moveTo(0,200);
-ctx5.lineTo(400,200);
-ctx5.strokeStyle="green";
-ctx5.stroke();
-
-var ctx6 = c.getContext("2d");
-ctx6.moveTo(0,300);
-ctx6.lineTo(400,300);
-ctx6.strokeStyle="green";
-ctx6.stroke();
 }
 
 function run()
@@ -95,13 +82,11 @@ function run()
     var ctx7 = c2.getContext("2d");
 	
 	ctx7.fillStyle = "#41f341"
-	ctx7.fillRect(0,0,99,99);
+	ctx7.fillRect(0,0,96,96);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",35,65);
-	
-    
 };
 
 drawField();
