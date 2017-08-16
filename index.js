@@ -81,62 +81,124 @@ function run()
 	var c2 = document.getElementById("myCanvas");
     var ctx7 = c2.getContext("2d");
 	
-	ctx7.fillStyle = "#41f341"
+	ctx7.fillStyle = "#41f341";
 	ctx7.fillRect(0,204,96,92);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",35,265);
 	
-	ctx7.fillStyle = "#41f341"
+	ctx7.fillStyle = "#41f341";
 	ctx7.fillRect(104,204,92,92);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",135,265);
 	
-	ctx7.fillStyle = "#41f341"
+	ctx7.fillStyle = "#41f341";
 	ctx7.fillRect(204,204,92,92);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",235,265);
 	
-	ctx7.fillStyle = "#41f341"
+	ctx7.fillStyle = "#41f341";
 	ctx7.fillRect(304,204,96,92);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",335,265);
 	
-	ctx7.fillStyle = "#41f341"
+	ctx7.fillStyle = "#41f341";
 	ctx7.fillRect(0,304,96,96);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",35,365);
 	
-	ctx7.fillStyle = "#41f341"
+	ctx7.fillStyle = "#41f341";
 	ctx7.fillRect(104,304,92,96);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",135,365);
 	
-	ctx7.fillStyle = "#41f341"
+	ctx7.fillStyle = "#41f341";
 	ctx7.fillRect(204,304,92,96);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",235,365);
 	
-	ctx7.fillStyle = "#41f341"
+	ctx7.fillStyle = "#41f341";
 	ctx7.fillRect(304,304,96,96);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
 	ctx7.fillText("2",335,365);
-};
+    ////////
+    ctx7.fillStyle = "#41f341";
+    ctx7.fillRect(0,0,96,96);
+
+    ctx7.font = "50px Arial";
+    ctx7.fillStyle = "green";
+    ctx7.fillText("2",35,65);
+
+    ctx7.fillStyle = "#41f341";
+    ctx7.fillRect(104,0,92,96);
+
+
+    ctx7.font = "50px Arial";
+    ctx7.fillStyle = "green";
+    ctx7.fillText("2",135,65);
+
+    ctx7.fillStyle = "#41f341";
+    ctx7.fillRect(204,0,92,96);
+
+
+    ctx7.font = "50px Arial";
+    ctx7.fillStyle = "green";
+    ctx7.fillText("2",235,65);
+
+    ctx7.fillStyle = "#41f341";
+    ctx7.fillRect(304,0,96,96);
+
+
+    ctx7.font = "50px Arial";
+    ctx7.fillStyle = "green";
+    ctx7.fillText("2",335,65);
+    ////////////
+    ctx7.fillStyle = "#41f341";
+    ctx7.fillRect(0,104,96,92);
+
+    ctx7.font = "50px Arial";
+    ctx7.fillStyle = "green";
+    ctx7.fillText("2",35,165);
+
+    ctx7.fillStyle = "#41f341";
+    ctx7.fillRect(104,104,92,92);
+
+
+    ctx7.font = "50px Arial";
+    ctx7.fillStyle = "green";
+    ctx7.fillText("2",135,165);
+
+    ctx7.fillStyle = "#41f341";
+    ctx7.fillRect(204,104,92,92);
+
+
+    ctx7.font = "50px Arial";
+    ctx7.fillStyle = "green";
+    ctx7.fillText("2",235,165);
+
+    ctx7.fillStyle = "#41f341";
+    ctx7.fillRect(304,104,96,92);
+
+
+    ctx7.font = "50px Arial";
+    ctx7.fillStyle = "green";
+    ctx7.fillText("2",335,165);
+}
 
 function block(xPos, yPos, xFill, yFill, num, numXPos, numYPos) {
     this.xPos = xPos;
