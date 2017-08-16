@@ -74,131 +74,42 @@ function drawField()
 		ctx.stroke();
 	}
 
+
+}
+function pickRandomItem(){
+        var randomItem = Math.floor(Math.random()* arrayOfBlocks.length);
+        return randomItem;
 }
 
-function run()
-{
+
+
+
+function callRun2(){
+        var randomProperty = pickRandomItem();
+        run2(arrayOfBlocks[randomProperty]);
+
+        deleteNumFromArray(randomProperty);
+}
+function deleteNumFromArray(randomProperty){
+    arrayOfBlocks.splice(randomProperty,1);
+    if(arrayOfBlocks.length === 0){
+        document.getElementById("myBtn").disabled = true;
+    }
+}
+
+function run2(block){
+    
 	var c2 = document.getElementById("myCanvas");
     var ctx7 = c2.getContext("2d");
 	
 	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(0,204,96,92);
+	ctx7.fillRect(block.xPos,block.yPos,block.xFill,block.yFill);
 	
 	ctx7.font = "50px Arial";
 	ctx7.fillStyle = "green";
-	ctx7.fillText("2",35,265);
-	
-	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(104,204,92,92);
-	
-	ctx7.font = "50px Arial";
-	ctx7.fillStyle = "green";
-	ctx7.fillText("2",135,265);
-	
-	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(204,204,92,92);
-	
-	ctx7.font = "50px Arial";
-	ctx7.fillStyle = "green";
-	ctx7.fillText("2",235,265);
-	
-	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(304,204,96,92);
-	
-	ctx7.font = "50px Arial";
-	ctx7.fillStyle = "green";
-	ctx7.fillText("2",335,265);
-	
-	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(0,304,96,96);
-	
-	ctx7.font = "50px Arial";
-	ctx7.fillStyle = "green";
-	ctx7.fillText("2",35,365);
-	
-	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(104,304,92,96);
-	
-	ctx7.font = "50px Arial";
-	ctx7.fillStyle = "green";
-	ctx7.fillText("2",135,365);
-	
-	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(204,304,92,96);
-	
-	ctx7.font = "50px Arial";
-	ctx7.fillStyle = "green";
-	ctx7.fillText("2",235,365);
-	
-	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(304,304,96,96);
-	
-	ctx7.font = "50px Arial";
-	ctx7.fillStyle = "green";
-	ctx7.fillText("2",335,365);
-    ////////
-    ctx7.fillStyle = "#41f341";
-    ctx7.fillRect(0,0,96,96);
-
-    ctx7.font = "50px Arial";
-    ctx7.fillStyle = "green";
-    ctx7.fillText("2",35,65);
-
-    ctx7.fillStyle = "#41f341";
-    ctx7.fillRect(104,0,92,96);
-
-
-    ctx7.font = "50px Arial";
-    ctx7.fillStyle = "green";
-    ctx7.fillText("2",135,65);
-
-    ctx7.fillStyle = "#41f341";
-    ctx7.fillRect(204,0,92,96);
-
-
-    ctx7.font = "50px Arial";
-    ctx7.fillStyle = "green";
-    ctx7.fillText("2",235,65);
-
-    ctx7.fillStyle = "#41f341";
-    ctx7.fillRect(304,0,96,96);
-
-
-    ctx7.font = "50px Arial";
-    ctx7.fillStyle = "green";
-    ctx7.fillText("2",335,65);
-    ////////////
-    ctx7.fillStyle = "#41f341";
-    ctx7.fillRect(0,104,96,92);
-
-    ctx7.font = "50px Arial";
-    ctx7.fillStyle = "green";
-    ctx7.fillText("2",35,165);
-
-    ctx7.fillStyle = "#41f341";
-    ctx7.fillRect(104,104,92,92);
-
-
-    ctx7.font = "50px Arial";
-    ctx7.fillStyle = "green";
-    ctx7.fillText("2",135,165);
-
-    ctx7.fillStyle = "#41f341";
-    ctx7.fillRect(204,104,92,92);
-
-
-    ctx7.font = "50px Arial";
-    ctx7.fillStyle = "green";
-    ctx7.fillText("2",235,165);
-
-    ctx7.fillStyle = "#41f341";
-    ctx7.fillRect(304,104,96,92);
-
-
-    ctx7.font = "50px Arial";
-    ctx7.fillStyle = "green";
-    ctx7.fillText("2",335,165);
+	ctx7.fillText(block.num,block.numXPos,block.numYPos);
 }
+
 
 function block(xPos, yPos, xFill, yFill, num, numXPos, numYPos) {
     this.xPos = xPos;
@@ -210,14 +121,34 @@ function block(xPos, yPos, xFill, yFill, num, numXPos, numYPos) {
 	this.numYPos = numYPos;
 }
 
+var arrayOfBlocks = [];
 function createBlocks()
 {
 
+    var block1 = new block(0,0,96,96,2,35,65);
+    var block2 = new block(104,0,92,96,2,135,65);
+    var block3 = new block(204,0,92,96,2,235,65);
+    var block4 = new block(304,0,96,96,2,335,65);
 
+    var block5 = new block(0,104,96,92,2,35,165);
+    var block6 = new block(104,104,92,92,2,135,165);
+    var block7 = new block(204,104,92,92,2,235,165);
+    var block8 = new block(304,104,96,92,2,335,165);
+
+    var block9 = new block(0,204,96,92,2,35,265);
+    var block10 = new block(104,204,92,92,2,135,265);
+    var block11 = new block(204,204,92,92,2,235,265);
+    var block12 = new block(304,204,96,92,2,335,265);
+
+    var block13 = new block(0,304,96,96,2,35,365);
+    var block14 = new block(104,304,92,96,2,135,365);
+    var block15 = new block(204,304,92,96,2,235,365);
+    var block16 = new block(304,304,96,96,2,335,365);
+    arrayOfBlocks.push(block1,block2,block3,block4,block5,block6,block7,block8,block9,block10,block11,block12,block13,block14,block15,block16);
 }
 
 drawField();
-
+createBlocks();
 
 
 
