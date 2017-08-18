@@ -91,7 +91,8 @@ function callRun2(){
         deleteNumFromArray(randomProperty);
 }
 function deleteNumFromArray(randomProperty){
-    arrayOfBlocks.splice(randomProperty,1);
+    var blockRemoved = arrayOfBlocks.splice(randomProperty,1);
+    arrayOfFullBlocks.push(blockRemoved);
     if(arrayOfBlocks.length === 0){
         document.getElementById("myBtn").disabled = true;
     }
@@ -136,6 +137,7 @@ function block(name, xPos, yPos, xFill, yFill, num, numXPos, numYPos) {
 }
 
 var arrayOfBlocks = [];
+var arrayOfFullBlocks = [];
 function createBlocks()
 {
     var block1 = new block("block1",0,0,96,96,2,35,65);
@@ -195,22 +197,22 @@ function checkNeighbors()
             up = "";
             down = "";
 
-            if (currBlock.blockLeft != null)
+            if (currBlock.blockLeft !== null)
             {
                 left = currBlock.blockLeft.name;
             }
 
-            if (currBlock.blockRight != null)
+            if (currBlock.blockRight !== null)
             {
                 right = currBlock.blockRight.name;
             }
 
-            if (currBlock.blockUp != null)
+            if (currBlock.blockUp !== null)
             {
                 up = currBlock.blockUp.name;
             }
 
-            if (currBlock.blockDown != null)
+            if (currBlock.blockDown !== null)
             {
                 down = currBlock.blockDown.name;
             }
@@ -225,6 +227,11 @@ function checkNeighbors()
     document.getElementById("neighborCheck").innerText = test;
 }
 
+
+
+
+
+
 document.onkeydown = function(e) {
     e = e || window.event;
     switch(e.which || e.keyCode) {
@@ -238,6 +245,8 @@ document.onkeydown = function(e) {
         break;
 
         case 39: // right
+        moveRight();
+        clearField();
         callRun2();
         break;
 
@@ -248,6 +257,39 @@ document.onkeydown = function(e) {
         default: return; // exit this handler for other keys
 }
 };
+
+function moveRight(){
+    
+    var movement = false;
+    do {
+        movement = false;
+        for (var i=0; i<arrayOfFullBlocks.length; i++){
+        currentBlock = arrayOfFullBlocks[i];
+        var currentBlockRight = currentBlock.blockRight;
+        // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
+        if (currentBlockRight === null || arrayOfFullBlocks.indexOf(currentBlockRight) !== -1 ){
+            break;
+        }
+        arrayOfFullBlocks[i] = currentBlockRight;
+        arrayOfBlocks[arrayOfBlocks.indexOf(currentBlockRight)] = currentBlock;
+        // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfBlocks (where all empty arrays are.
+        movement = true;
+        }
+    }
+    while (movement);
+}
+
+function clearField(){
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+    for(var i = 0; i < arrayOfBlocks.length; i++){
+        currentBlock = arrayOfBlocks[i];
+        ctx.clearRect(currentBlock.xPos,currentBlock.yPos,currentBlock.xFill,currentBlock.yFill);
+    }
+}
+
+
+
 
 
 
