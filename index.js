@@ -81,7 +81,7 @@ function pickRandomItem(){
         return randomItem;
 }
 
-
+/// pickRandomItem() goes through the arrayOfBlocks and picks randomly an item. The return value is stored in the variable randomItem
 
 
 function callRun2(){
@@ -150,6 +150,30 @@ function createBlocks()
 drawField();
 createBlocks();
 
+
+document.onkeydown = function(e) {
+    e = e || window.event;
+    switch(e.which || e.keyCode) {
+
+        case 37: // left
+        callRun2();
+        break;
+
+        case 38: // up
+        callRun2();
+        break;
+
+        case 39: // right
+        callRun2();
+        break;
+
+        case 40: // down
+        callRun2();
+        break;
+
+        default: return; // exit this handler for other keys
+}
+};
 
 
 
