@@ -77,23 +77,23 @@ function drawField()
 
 }
 function pickRandomItem(){
-        var randomItem = Math.floor(Math.random()* arrayOfBlocks.length);
+        var randomItem = Math.floor(Math.random()* arrayOfEmptyBlocks.length);
         return randomItem;
 }
 
-/// pickRandomItem() goes through the arrayOfBlocks and picks randomly an item. The return value is stored in the variable randomItem
+/// pickRandomItem() goes through the arrayOfEmptyBlocks and picks randomly an item. The return value is stored in the variable randomItem
 
 
 function callRun2(){
         var randomProperty = pickRandomItem();
-        run2(arrayOfBlocks[randomProperty]);
+        run2(arrayOfEmptyBlocks[randomProperty]);
 
         deleteNumFromArray(randomProperty);
 }
 function deleteNumFromArray(randomProperty){
-    var blockRemoved = arrayOfBlocks.splice(randomProperty,1);
+    var blockRemoved = arrayOfEmptyBlocks.splice(randomProperty,1);
     arrayOfFullBlocks.push(blockRemoved);
-    if(arrayOfBlocks.length === 0){
+    if(arrayOfEmptyBlocks.length === 0){
         document.getElementById("myBtn").disabled = true;
     }
 }
@@ -136,8 +136,9 @@ function block(name, xPos, yPos, xFill, yFill, num, numXPos, numYPos) {
     };
 }
 
-var arrayOfBlocks = [];
+var arrayOfEmptyBlocks = [];
 var arrayOfFullBlocks = [];
+console.log("*********",arrayOfFullBlocks);
 function createBlocks()
 {
     var block1 = new block("block1",0,0,96,96,2,35,65);
@@ -177,7 +178,7 @@ function createBlocks()
     block15.setBlockNeighbors(block14,block16,block11,null);
     block16.setBlockNeighbors(block15,null,block12,null);
 
-    arrayOfBlocks.push(block1,block2,block3,block4,block5,block6,
+    arrayOfEmptyBlocks.push(block1,block2,block3,block4,block5,block6,
             block7,block8,block9,block10,block11,block12,block13,
             block14,block15,block16);
 }
@@ -189,9 +190,9 @@ function checkNeighbors()
 {
     var test = "";
 
-    for (var i = 0; i < arrayOfBlocks.length; i++)
+    for (var i = 0; i < arrayOfEmptyBlocks.length; i++)
         {
-            currBlock = arrayOfBlocks[i];
+            currBlock = arrayOfEmptyBlocks[i];
             left = "";
             right = "";
             up = "";
@@ -265,14 +266,15 @@ function moveRight(){
         movement = false;
         for (var i=0; i<arrayOfFullBlocks.length; i++){
         currentBlock = arrayOfFullBlocks[i];
+        console.log("++++,,,,,,,,,,,,, current Block:", currentBlock);
         var currentBlockRight = currentBlock.blockRight;
         // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
         if (currentBlockRight === null || arrayOfFullBlocks.indexOf(currentBlockRight) !== -1 ){
             break;
         }
         arrayOfFullBlocks[i] = currentBlockRight;
-        arrayOfBlocks[arrayOfBlocks.indexOf(currentBlockRight)] = currentBlock;
-        // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfBlocks (where all empty arrays are.
+        arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockRight)] = currentBlock;
+        // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.
         movement = true;
         }
     }
@@ -282,8 +284,8 @@ function moveRight(){
 function clearField(){
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
-    for(var i = 0; i < arrayOfBlocks.length; i++){
-        currentBlock = arrayOfBlocks[i];
+    for(var i = 0; i < arrayOfEmptyBlocks.length; i++){
+        currentBlock = arrayOfEmptyBlocks[i];
         ctx.clearRect(currentBlock.xPos,currentBlock.yPos,currentBlock.xFill,currentBlock.yFill);
     }
 }
