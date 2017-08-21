@@ -91,8 +91,11 @@ function callRun2(){
         deleteNumFromArray(randomProperty);
 }
 function deleteNumFromArray(randomProperty){
-    var blockRemoved = arrayOfEmptyBlocks.splice(randomProperty,1);
-    arrayOfFullBlocks.push(blockRemoved);
+    var blockRemovedArray = arrayOfEmptyBlocks.splice(randomProperty,1);
+    if (blockRemovedArray !== null && blockRemovedArray.length != 0) {
+        arrayOfFullBlocks.push(blockRemovedArray[0]);
+    }
+    
     if(arrayOfEmptyBlocks.length === 0){
         document.getElementById("myBtn").disabled = true;
     }
