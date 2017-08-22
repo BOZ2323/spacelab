@@ -1,54 +1,3 @@
-function makeRow(numberOfFields) {
-	var number = null;
-	var row = [];
-	for(var i=0; i<numberOfFields; i++) {
-		row.push(number);
-	}
-	return row;
-}  
-
-function makeField(numberOfRows) {
-	var field = [];
-	var row;
-	for(var i =0; i<numberOfRows; i++){
-    row = makeRow(numberOfRows);
-		field.push(row);
-	}
-	return field;
-}
-
-var playingField = makeField(4);
-//console.log("playingField",playingField);
-
-function getRandomCoordinates(playfieldSize) {
-    return [
-        Math.floor(Math.random()* playfieldSize),
-        Math.floor(Math.random()* playfieldSize)
-    ];
-}
-
-function placeNumberAtRandomFreePosition(number) {
-    var x, y;
-    var field = makeField(4);
-    console.log("big field",field);
-    do {
-        var coordinates = getRandomCoordinates(4);
-        x = coordinates[0];
-        console.log(x);
-        y = coordinates[1];
-        console.log(y);
-        playingField[x][y] = number;//set playingField[x][y] = 2; 
-        console.log("playingField x y: ",playingField[x][y]);
-    } while(field[x][y] !== null);//as long as field[x][y] does not equal 0;
-    console.log ("field",field[x][y]);
-}
-
-//placeNumberAtRandomFreePosition(2);
-//placeNumberAtRandomFreePosition(2);
-
-//console.log("final playingField",playingField);
-
-
 function drawField()
 {
 	var c = document.getElementById("myCanvas");
@@ -186,8 +135,9 @@ function createBlocks()
             block14,block15,block16);
 }
 
-drawField();
 createBlocks();
+
+// following is a test functions for the above data
 
 function checkNeighbors()
 {
@@ -241,21 +191,30 @@ document.onkeydown = function(e) {
     switch(e.which || e.keyCode) {
 
         case 37: // left
+        move("left");
+        clearField();
+        redrawField();
         callRun2();
         break;
 
         case 38: // up
+        move("up");
+        clearField();
+        redrawField();
         callRun2();
         break;
 
         case 39: // right
-        moveRight();
+        move("right");
         clearField();
         redrawField();
         callRun2();
         break;
 
         case 40: // down
+        move("down");
+        clearField();
+        redrawField();
         callRun2();
         break;
 
@@ -263,21 +222,47 @@ document.onkeydown = function(e) {
 }
 };
 
-function moveRight(){
+function move(direction){
     
     var movement = false;
+
     do {
         movement = false;
         for (var i=0; i<arrayOfFullBlocks.length; i++){
         currentBlock = arrayOfFullBlocks[i];
-        //console.log("++++,,,,,,,,,,,,, current Block:", currentBlock);
-        var currentBlockRight = currentBlock.blockRight;
-        // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
-        if (currentBlockRight === null || arrayOfFullBlocks.indexOf(currentBlockRight) !== -1 ){
-            continue;
+        var currentBlockMove;
+        switch (direction){
+            case "left":
+                currentBlockMove = currentBlock.blockLeft;
+                break;
+            case "right":
+                currentBlockMove = currentBlock.blockRight;
+                break;
+            case "up":
+                currentBlockMove = currentBlock.blockUp;
+                break;
+            case "down":
+                currentBlockMove = currentBlock.blockDown;
+                break;
         }
-        arrayOfFullBlocks[i] = currentBlockRight;
-        arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockRight)] = currentBlock;
+
+        // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
+         
+        if (currentBlockMove === null || (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.num !== currentBlock.num)){
+            //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same a in currentBlock.num
+            continue;
+        }else if (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.num == currentBlock.num){
+                currentBlockMove.num = currentBlockMove.num * 2;
+                var justOneBlockArray =  arrayOfFullBlocks.splice(i,1);
+                // we splice the item of the arrayOfEmptyBlocks, but push it to a variable, since otherwise it is stored as an array withing the arrayOfEmptyBlocks.
+                if (justOneBlockArray !== null && justOneBlockArray.length != 0) {
+                    arrayOfEmptyBlocks.push(justOneBlockArray[0]);
+                }
+                movement = true;
+               break;
+        }
+        arrayOfFullBlocks[i] = currentBlockMove;
+        arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockMove)] = currentBlock;
         // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.
         movement = true;
         }
@@ -302,7 +287,7 @@ function redrawField()
     }
 }
 
-
+drawField();
 
 
 
