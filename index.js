@@ -73,6 +73,7 @@ function block(name, xPos, yPos, xFill, yFill, num, numXPos, numYPos) {
 	this.num = num;
 	this.numXPos = numXPos;
     this.numYPos = numYPos;
+    this.upDated = false;
     
     this.blockLeft = null;
     this.blockRight = null;
@@ -252,6 +253,10 @@ function move(direction){
             //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same a in currentBlock.num
             continue;
         }else if (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.num == currentBlock.num){
+                if (currentBlockMove.upDated || currentBlock.upDated){
+                    continue;
+                }
+                currentBlockMove.upDated = true;
                 currentBlockMove.num = currentBlockMove.num * 2;
                 var justOneBlockArray =  arrayOfFullBlocks.splice(i,1);
                 // we splice the item of the arrayOfEmptyBlocks, but push it to a variable, since otherwise it is stored as an array withing the arrayOfEmptyBlocks.
@@ -286,6 +291,7 @@ function redrawField()
     for (var i = 0; i < arrayOfFullBlocks.length; i++) {
         currBlock = arrayOfFullBlocks[i];
         drawBlock(currBlock);
+        currBlock.upDated = false;
     }
 }
 
