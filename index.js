@@ -261,6 +261,8 @@ function move(direction){
                 movement = true;
                break;
         }
+        currentBlockMove.num = currentBlock.num;
+        currentBlock.num = 2;
         arrayOfFullBlocks[i] = currentBlockMove;
         arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockMove)] = currentBlock;
         // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.
