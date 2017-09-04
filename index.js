@@ -50,29 +50,20 @@ function deleteNumFromArray(randomProperty){
     }
 }
 
-function drawBlock(block){
-    
-	var c2 = document.getElementById("myCanvas");
-    var ctx7 = c2.getContext("2d");
-	
-	ctx7.fillStyle = "#41f341";
-	ctx7.fillRect(block.xPos,block.yPos,block.xFill,block.yFill);
-	
-	ctx7.font = "50px Arial";
-	ctx7.fillStyle = "green";
-	ctx7.fillText(block.num,block.numXPos,block.numYPos);
+function drawBlock(currentBlock){
+    var ctx = document.getElementById("myCanvas").getContext("2d");
+	var img = document.getElementById("img" + currentBlock.img);
+    ctx.drawImage(img, currentBlock.xPos, currentBlock.yPos, currentBlock.xFill, currentBlock.yFill);
 }
 
 
-function block(name, xPos, yPos, xFill, yFill, num, numXPos, numYPos) {
+function block(name, img, xPos, yPos, xFill, yFill) {
     this.name = name;
+    this.img = img;
     this.xPos = xPos;
     this.yPos = yPos;
     this.xFill = xFill;
-	this.yFill = yFill;
-	this.num = num;
-	this.numXPos = numXPos;
-    this.numYPos = numYPos;
+    this.yFill = yFill;
     this.upDated = false;
     
     this.blockLeft = null;
@@ -89,31 +80,32 @@ function block(name, xPos, yPos, xFill, yFill, num, numXPos, numYPos) {
     };
 }
 
+
 var arrayOfEmptyBlocks = [];
 var arrayOfFullBlocks = [];
 //console.log("*********",arrayOfFullBlocks);
 function createBlocks()
 {
-    var block1 = new block("block1",4,4,92,92,2,35,65);
-    var block2 = new block("block2",104,4,92,92,2,135,65);
-    var block3 = new block("block3",204,4,92,92,2,235,65);
-    var block4 = new block("block4",304,4,92,92,2,335,65);
-
-    var block5 = new block("block5",4,104,92,92,2,35,165);
-    var block6 = new block("block6",104,104,92,92,2,135,165);
-    var block7 = new block("block7",204,104,92,92,2,235,165);
-    var block8 = new block("block8",304,104,92,92,2,335,165);
-
-    var block9 = new block("block9",4,204,92,92,2,35,265);
-    var block10 = new block("block10",104,204,92,92,2,135,265);
-    var block11 = new block("block11",204,204,92,92,2,235,265);
-    var block12 = new block("block12",304,204,92,92,2,335,265);
-
-    var block13 = new block("block13",4,304,92,92,2,35,365);
-    var block14 = new block("block14",104,304,92,92,2,135,365);
-    var block15 = new block("block15",204,304,92,92,2,235,365);
-    var block16 = new block("block16",304,304,92,92,2,335,365);
-
+    var block1 = new block("block1",1,4,4,92,92);
+    var block2 = new block("block2",1,104,4,92,92);
+    var block3 = new block("block3",1,204,4,92,92);
+    var block4 = new block("block4",1,304,4,92,92);
+    
+    var block5 = new block("block5",1,4,104,92,92);
+    var block6 = new block("block6",1,104,104,92,92);
+    var block7 = new block("block7",1,204,104,92,92);
+    var block8 = new block("block8",1,304,104,92,92);
+    
+    var block9 = new block("block9",1,4,204,92,92);
+    var block10 = new block("block10",1,104,204,92,92);
+    var block11 = new block("block11",1,204,204,92,92);
+    var block12 = new block("block12",1,304,204,92,92);
+    
+    var block13 = new block("block13",1,4,304,92,92);
+    var block14 = new block("block14",1,104,304,92,92);
+    var block15 = new block("block15",1,204,304,92,92);
+    var block16 = new block("block16",1,304,304,92,92);
+    
     block1.setBlockNeighbors(null, block2,null,block5);
     block2.setBlockNeighbors(block1,block3,null,block6);
     block3.setBlockNeighbors(block2,block4,null,block7);
@@ -249,15 +241,15 @@ function move(direction){
 
         // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
          
-        if (currentBlockMove === null || (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.num !== currentBlock.num)){
-            //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same a in currentBlock.num
+        if (currentBlockMove === null || (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img !== currentBlock.img)){
+            //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same a in currentBlock.img
             continue;
-        }else if (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.num == currentBlock.num){
+        }else if (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img == currentBlock.img){
                 if (currentBlockMove.upDated || currentBlock.upDated){
                     continue;
                 }
                 currentBlockMove.upDated = true;
-                currentBlockMove.num = currentBlockMove.num * 2;
+                currentBlockMove.img = currentBlockMove.img + 1;
                 var justOneBlockArray =  arrayOfFullBlocks.splice(i,1);
                 // we splice the item of the arrayOfEmptyBlocks, but push it to a variable, since otherwise it is stored as an array withing the arrayOfEmptyBlocks.
                 if (justOneBlockArray !== null && justOneBlockArray.length != 0) {
@@ -266,8 +258,8 @@ function move(direction){
                 movement = true;
                break;
         }
-        currentBlockMove.num = currentBlock.num;
-        currentBlock.num = 2;
+        currentBlockMove.img = currentBlock.img;
+        currentBlock.img = 1;
         arrayOfFullBlocks[i] = currentBlockMove;
         arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockMove)] = currentBlock;
         // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.

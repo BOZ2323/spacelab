@@ -118,7 +118,7 @@ function move(currBlock)
 {
     var oldX = currBlock.xPos;
 
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 5; i++) {
         setTimeout(function() {
             animate(currBlock)
         }, 20*i);
@@ -143,6 +143,7 @@ function eraseBlock(currBlock) {
 function animate(currBlock) {
     eraseBlock(currBlock);
     updateLocation(currBlock);
+    drawField();
     drawBlock(currBlock);
 }
 
@@ -153,5 +154,5 @@ function resetLocation(currBlock, oldLocation)
 
 function updateLocation(currBlock)
 {
-    currBlock.xPos = currBlock.xPos + 20;
+    currBlock.yPos = currBlock.yPos + 20;
 }
