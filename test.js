@@ -32,11 +32,24 @@ function block(name, xPos, yPos, xFill, yFill) {
 }
 
 
-function drawBlock(){
+function drawBlock(currentBlock){
     
 	var ctx = document.getElementById("myCanvas").getContext("2d");
-	var img = document.getElementById(currBlock.name);
-    ctx.drawImage(img, currBlock.xPos, currBlock.yPos, currBlock.xFill, currBlock.yFill);
+	var img = document.getElementById(currentBlock.name);
+    ctx.drawImage(img, currentBlock.xPos, currentBlock.yPos, currentBlock.xFill, currentBlock.yFill);
+    ctx.strokeRect(currentBlock.xPos+2, currentBlock.yPos+2, currentBlock.xFill-3, currentBlock.yFill-3);
+}
+
+function drawCombinedBlock(currentBlock){
+    
+	var ctx = document.getElementById("myCanvas").getContext("2d");
+    var img = document.getElementById(currentBlock.name);
+    ctx.drawImage(img, currentBlock.xPos, currentBlock.yPos, currentBlock.xFill, currentBlock.yFill);
+    ctx.shadowBlur = 4;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.shadowColor = "green";
+    ctx.strokeRect(currentBlock.xPos+2, currentBlock.yPos+2, currentBlock.xFill-3, currentBlock.yFill-3);
 }
 
 function eraseBlock() {
@@ -62,13 +75,14 @@ function reset(oldX)
 {
     eraseBlock();
     resetLocation(oldX);
-    drawBlock();
+    currBlock2.name = "img2";
+    drawCombinedBlock(currBlock2);
 }
 
 function animate() {
     eraseBlock();
     updateLocation();
-    drawBlock();
+    drawBlock(currBlock);
 }
 
 function resetLocation(oldLocation)
@@ -87,4 +101,8 @@ function go()
 }
 
 currBlock = new block("img1",10,10, 100,100);
+currBlock2 = new block("img1",130,10, 100,100);
+
+
 drawBlock(currBlock);
+drawBlock(currBlock2);
