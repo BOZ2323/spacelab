@@ -3,9 +3,9 @@ function drawField()
 	var c = document.getElementById("myCanvas");
 	var ctx = c.getContext("2d");
 	
-	for (var i = 0; i < 3; i++)
+	for (var i = 0; i < 5; i++)
 	{
-		var positionX = 100 + (100 * i);
+		var positionX = 100 * i;
 		ctx.moveTo(positionX,0);
 		ctx.lineTo(positionX,400);
 		ctx.strokeStyle="green";
@@ -13,9 +13,9 @@ function drawField()
 		ctx.stroke();
 	}
 	
-	for (var j = 0; j < 3; j++)
+	for (var j = 0; j < 5; j++)
 	{
-		var positionY = 100 + (100 * j);
+		var positionY = 100 * j;
 		ctx.moveTo(0,positionY);
 		ctx.lineTo(400, positionY);
 		ctx.strokeStyle="green";
@@ -94,25 +94,25 @@ var arrayOfFullBlocks = [];
 //console.log("*********",arrayOfFullBlocks);
 function createBlocks()
 {
-    var block1 = new block("block1",0,0,96,96,2,35,65);
-    var block2 = new block("block2",104,0,92,96,2,135,65);
-    var block3 = new block("block3",204,0,92,96,2,235,65);
-    var block4 = new block("block4",304,0,96,96,2,335,65);
+    var block1 = new block("block1",4,4,92,92,2,35,65);
+    var block2 = new block("block2",104,4,92,92,2,135,65);
+    var block3 = new block("block3",204,4,92,92,2,235,65);
+    var block4 = new block("block4",304,4,92,92,2,335,65);
 
-    var block5 = new block("block5",0,104,96,92,2,35,165);
+    var block5 = new block("block5",4,104,92,92,2,35,165);
     var block6 = new block("block6",104,104,92,92,2,135,165);
     var block7 = new block("block7",204,104,92,92,2,235,165);
-    var block8 = new block("block8",304,104,96,92,2,335,165);
+    var block8 = new block("block8",304,104,92,92,2,335,165);
 
-    var block9 = new block("block9",0,204,96,92,2,35,265);
+    var block9 = new block("block9",4,204,92,92,2,35,265);
     var block10 = new block("block10",104,204,92,92,2,135,265);
     var block11 = new block("block11",204,204,92,92,2,235,265);
-    var block12 = new block("block12",304,204,96,92,2,335,265);
+    var block12 = new block("block12",304,204,92,92,2,335,265);
 
-    var block13 = new block("block13",0,304,96,96,2,35,365);
-    var block14 = new block("block14",104,304,92,96,2,135,365);
-    var block15 = new block("block15",204,304,92,96,2,235,365);
-    var block16 = new block("block16",304,304,96,96,2,335,365);
+    var block13 = new block("block13",4,304,92,92,2,35,365);
+    var block14 = new block("block14",104,304,92,92,2,135,365);
+    var block15 = new block("block15",204,304,92,92,2,235,365);
+    var block16 = new block("block16",304,304,92,92,2,335,365);
 
     block1.setBlockNeighbors(null, block2,null,block5);
     block2.setBlockNeighbors(block1,block3,null,block6);
