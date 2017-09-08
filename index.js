@@ -222,48 +222,55 @@ function move(direction){
     do {
         movement = false;
         for (var i=0; i<arrayOfFullBlocks.length; i++){
-        currentBlock = arrayOfFullBlocks[i];
-        var currentBlockMove;
-        switch (direction){
-            case "left":
-                currentBlockMove = currentBlock.blockLeft;
-                break;
-            case "right":
-                currentBlockMove = currentBlock.blockRight;
-                break;
-            case "up":
-                currentBlockMove = currentBlock.blockUp;
-                break;
-            case "down":
-                currentBlockMove = currentBlock.blockDown;
-                break;
-        }
+            currentBlock = arrayOfFullBlocks[i];
+            var currentBlockMove;
+            switch (direction){
+                case "left":
+                    currentBlockMove = currentBlock.blockLeft;
+                    break;
+                case "right":
+                    currentBlockMove = currentBlock.blockRight;
+                    break;
+                case "up":
+                    currentBlockMove = currentBlock.blockUp;
+                    break;
+                case "down":
+                    currentBlockMove = currentBlock.blockDown;
+                    break;
+            }
 
-        // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
-         
-        if (currentBlockMove === null || (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img !== currentBlock.img)){
-            //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same a in currentBlock.img
-            continue;
-        }else if (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img == currentBlock.img){
-                if (currentBlockMove.upDated || currentBlock.upDated){
-                    continue;
-                }
-                currentBlockMove.upDated = true;
-                currentBlockMove.img = currentBlockMove.img + 1;
-                var justOneBlockArray =  arrayOfFullBlocks.splice(i,1);
-                // we splice the item of the arrayOfEmptyBlocks, but push it to a variable, since otherwise it is stored as an array withing the arrayOfEmptyBlocks.
-                if (justOneBlockArray !== null && justOneBlockArray.length != 0) {
-                    arrayOfEmptyBlocks.push(justOneBlockArray[0]);
-                }
-                movement = true;
-               break;
-        }
-        currentBlockMove.img = currentBlock.img;
-        currentBlock.img = 1;
-        arrayOfFullBlocks[i] = currentBlockMove;
-        arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockMove)] = currentBlock;
-        // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.
-        movement = true;
+            // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
+            
+            if (currentBlockMove === null || (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img !== currentBlock.img)){
+                //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same images
+                //i.e. no movement should happen
+                continue;
+            } else if (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img == currentBlock.img){
+                    if (currentBlockMove.upDated || currentBlock.upDated){
+                        continue;
+                        //no movement happens
+                    }
+                    currentBlockMove.upDated = true;
+                    currentBlockMove.img = currentBlockMove.img + 1;
+                    var justOneBlockArray =  arrayOfFullBlocks.splice(i,1);
+                    // we splice the item of the arrayOfEmptyBlocks, but push it to a variable, since otherwise it is stored as an array withing the arrayOfEmptyBlocks.
+                    if (justOneBlockArray !== null && justOneBlockArray.length != 0) {
+                        arrayOfEmptyBlocks.push(justOneBlockArray[0]);
+                    }
+                    movement = true;
+                    
+                    
+                    /**TO DO: ANIMATE!!! ALSO CHANGE TO new image*/
+                break;
+            }
+            currentBlockMove.img = currentBlock.img;
+            currentBlock.img = 1;
+            arrayOfFullBlocks[i] = currentBlockMove;
+            arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockMove)] = currentBlock;
+            // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.
+            movement = true;
+            /**TO DO: ANIMATE!!! */
+            loopAnimation(currentBlock, direction);
         }
     }
     while (movement);
@@ -288,6 +295,74 @@ function redrawField()
 }
 
 drawField();
+
+function loopAnimation(currBlock, direction) {
+    var oldPos;
+    switch (direction)
+    {
+        case "left":
+        case "right" :
+            oldPos = currBlock.xPos;
+            break;
+        case "up":
+        case "down" :
+            oldPos = currBlock.yPos;
+            break;
+    }
+    
+    for (var i = 0; i < 5; i++) {
+        setTimeout(function() {
+            animate(currBlock, direction)
+        }, 20*i);
+    }
+    setTimeout(function() {resetLocation(currBlock,oldPos,direction)},120);
+}
+
+function animate(currBlock, direction) {
+    eraseBlock(currBlock);
+    updateLocation(currBlock, direction);
+    drawField();
+    drawBlock(currBlock);
+}
+
+function eraseBlock(currBlock) {
+    var ctx = document.getElementById("myCanvas").getContext("2d");
+    ctx.clearRect(currBlock.xPos,currBlock.yPos,currBlock.xFill,currBlock.yFill);
+}
+
+function updateLocation(currBlock, direction)
+{
+    switch(direction)
+    {
+        case "left" :
+            currentBlock.xPos = currBlock.xPos - 20;
+            break;
+        case "right" :
+            currentBlock.xPos = currBlock.xPos + 20;
+            break;
+        case "up" :
+            currentBlock.yPos = currBlock.yPos - 20;
+            break;
+        case "down" :
+            currentBlock.yPos = currBlock.yPos + 20;
+            break;
+    }
+}
+
+function resetLocation(currBlock, oldPos, direction)
+{
+    switch (direction)
+    {
+        case "left":
+        case "right" :
+            currBlock.xPos = oldPos;
+            break;
+        case "up":
+        case "down" :
+            currBlock.yPos = oldPos;
+            break;
+    }
+}
 
 
 
