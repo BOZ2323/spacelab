@@ -253,7 +253,7 @@ function move(direction){
                     currentBlockMove.upDated = true;
                     currentBlockMove.img = currentBlockMove.img + 1;
                     var justOneBlockArray =  arrayOfFullBlocks.splice(i,1);
-                    // we splice the item of the arrayOfEmptyBlocks, but push it to a variable, since otherwise it is stored as an array withing the arrayOfEmptyBlocks.
+                    // we splice the item of the arrayOfFullBlocks, but push it to a variable, since otherwise it is stored as an array within the arrayOfEmptyBlocks.
                     if (justOneBlockArray !== null && justOneBlockArray.length != 0) {
                         arrayOfEmptyBlocks.push(justOneBlockArray[0]);
                     }
