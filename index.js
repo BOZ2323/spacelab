@@ -65,7 +65,6 @@ function block(name, img, xPos, yPos, xFill, yFill) {
     this.xFill = xFill;
     this.yFill = yFill;
     this.upDated = false;
-    this.changeAtReset = false;
     
     this.blockLeft = null;
     this.blockRight = null;
