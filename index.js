@@ -65,6 +65,7 @@ function block(name, img, xPos, yPos, xFill, yFill) {
     this.xFill = xFill;
     this.yFill = yFill;
     this.upDated = false;
+    this.changeAtReset = false;
     
     this.blockLeft = null;
     this.blockRight = null;
@@ -83,6 +84,7 @@ function block(name, img, xPos, yPos, xFill, yFill) {
 
 var arrayOfEmptyBlocks = [];
 var arrayOfFullBlocks = [];
+var currentlyMoving = false;
 //console.log("*********",arrayOfFullBlocks);
 function createBlocks()
 {
@@ -180,31 +182,34 @@ function checkNeighbors()
 
 
 document.onkeydown = function(e) {
-    e = e || window.event;
-    switch(e.which || e.keyCode) {
+    if (!currentlyMoving) {
+        e = e || window.event;
+        switch(e.which || e.keyCode) {
 
-        case 37: // left
-        move("left");
-        break;
+            case 37: // left
+            move("left");
+            break;
 
-        case 38: // up
-        move("up");
-        break;
+            case 38: // up
+            move("up");
+            break;
 
-        case 39: // right
-        move("right");
-        break;
+            case 39: // right
+            move("right");
+            break;
 
-        case 40: // down
-        move("down");
-        break;
+            case 40: // down
+            move("down");
+            break;
 
-        default: return; // exit this handler for other keys
+            default: return; // exit this handler for other keys
+        }
     }
 };
 
 function move(direction){
     var movement = false;
+    currentlyMoving = true;
     var arrayToMove = [];
     for (var i=0; i<arrayOfFullBlocks.length; i++){
         currentBlock = arrayOfFullBlocks[i];
@@ -247,7 +252,6 @@ function move(direction){
             break;
         }
         currentBlockMove.img = currentBlock.img;
-        currentBlock.img = 1;
         arrayOfFullBlocks[i] = currentBlockMove;
         arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockMove)] = currentBlock;
         // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.
@@ -263,17 +267,23 @@ function move(direction){
     }
     else
     {
-        clearField();
+        clearField(true);
         redrawField(true);
         callRun2();
+        currentlyMoving = false;
     }
 }
 
-function clearField(){
+function clearField(resetBlock){
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
     for(var i = 0; i < arrayOfEmptyBlocks.length; i++){
         currentBlock = arrayOfEmptyBlocks[i];
+        if (resetBlock)
+        {
+            currentBlock.img = 1;
+            currentBlock.upDated = false;
+        }
         ctx.clearRect(currentBlock.xPos,currentBlock.yPos,currentBlock.xFill,currentBlock.yFill);
     }
 }
@@ -328,7 +338,7 @@ function loopAnimation(arrayToMove, direction) {
             }, 20*k);
         }
         setTimeout(function() {
-            clearField();
+            clearField(false);
             redrawField(false);
         },120);
     }
