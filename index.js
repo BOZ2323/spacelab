@@ -185,95 +185,88 @@ document.onkeydown = function(e) {
 
         case 37: // left
         move("left");
-        clearField();
-        redrawField();
-        callRun2();
         break;
 
         case 38: // up
         move("up");
-        clearField();
-        redrawField();
-        callRun2();
         break;
 
         case 39: // right
         move("right");
-        clearField();
-        redrawField();
-        callRun2();
         break;
 
         case 40: // down
         move("down");
-        clearField();
-        redrawField();
-        callRun2();
         break;
 
         default: return; // exit this handler for other keys
-}
+    }
 };
 
 function move(direction){
-    
     var movement = false;
-
-    do {
-        movement = false;
-        for (var i=0; i<arrayOfFullBlocks.length; i++){
-            currentBlock = arrayOfFullBlocks[i];
-            var currentBlockMove;
-            switch (direction){
-                case "left":
-                    currentBlockMove = currentBlock.blockLeft;
-                    break;
-                case "right":
-                    currentBlockMove = currentBlock.blockRight;
-                    break;
-                case "up":
-                    currentBlockMove = currentBlock.blockUp;
-                    break;
-                case "down":
-                    currentBlockMove = currentBlock.blockDown;
-                    break;
-            }
-
-            // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
-            
-            if (currentBlockMove === null || (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img !== currentBlock.img)){
-                //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same images
-                //i.e. no movement should happen
-                continue;
-            } else if (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img == currentBlock.img){
-                    if (currentBlockMove.upDated || currentBlock.upDated){
-                        continue;
-                        //no movement happens
-                    }
-                    currentBlockMove.upDated = true;
-                    currentBlockMove.img = currentBlockMove.img + 1;
-                    var justOneBlockArray =  arrayOfFullBlocks.splice(i,1);
-                    // we splice the item of the arrayOfFullBlocks, but push it to a variable, since otherwise it is stored as an array within the arrayOfEmptyBlocks.
-                    if (justOneBlockArray !== null && justOneBlockArray.length != 0) {
-                        arrayOfEmptyBlocks.push(justOneBlockArray[0]);
-                    }
-                    movement = true;
-                    
-                    
-                    /**TO DO: ANIMATE!!! ALSO CHANGE TO new image*/
+    var arrayToMove = [];
+    for (var i=0; i<arrayOfFullBlocks.length; i++){
+        currentBlock = arrayOfFullBlocks[i];
+        var currentBlockMove;
+        switch (direction){
+            case "left":
+                currentBlockMove = currentBlock.blockLeft;
                 break;
-            }
-            currentBlockMove.img = currentBlock.img;
-            currentBlock.img = 1;
-            arrayOfFullBlocks[i] = currentBlockMove;
-            arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockMove)] = currentBlock;
-            // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.
-            movement = true;
-            /**TO DO: ANIMATE!!! */
-            loopAnimation(currentBlock, direction);
+            case "right":
+                currentBlockMove = currentBlock.blockRight;
+                break;
+            case "up":
+                currentBlockMove = currentBlock.blockUp;
+                break;
+            case "down":
+                currentBlockMove = currentBlock.blockDown;
+                break;
         }
+
+        // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
+        
+        if (currentBlockMove === null || (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img !== currentBlock.img)){
+            //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same images
+            //i.e. no movement should happen
+            continue;
+        } else if (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img == currentBlock.img) {
+            if (currentBlockMove.upDated || currentBlock.upDated){
+                continue;
+                //no movement happens
+            }
+            currentBlockMove.upDated = true;
+            currentBlockMove.img = currentBlockMove.img + 1;
+            var justOneBlockArray =  arrayOfFullBlocks.splice(i,1);
+            // we splice the item of the arrayOfFullBlocks, but push it to a variable, since otherwise it is stored as an array within the arrayOfEmptyBlocks.
+            if (justOneBlockArray !== null && justOneBlockArray.length != 0) {
+                arrayOfEmptyBlocks.push(justOneBlockArray[0]);
+            }
+            movement = true;
+            arrayToMove.push(currentBlock);
+            break;
+        }
+        currentBlockMove.img = currentBlock.img;
+        currentBlock.img = 1;
+        arrayOfFullBlocks[i] = currentBlockMove;
+        arrayOfEmptyBlocks[arrayOfEmptyBlocks.indexOf(currentBlockMove)] = currentBlock;
+        // we swapped two positions. We put currentBlockRight (it was in the "empty" array) into the arrayOfFullBlocks. We put currentBlock, which was in the arrayOfFullBlocks into the arrayOfEmptyBlocks (where all empty arrays are.
+        movement = true;
+        arrayToMove.push(currentBlock);
     }
-    while (movement);
+    
+    loopAnimation(arrayToMove, direction);
+    
+    if (movement)
+    {
+        setTimeout(function() {move(direction)},120);
+    }
+    else
+    {
+        clearField();
+        redrawField(true);
+        callRun2();
+    }
 }
 
 function clearField(){
@@ -285,43 +278,65 @@ function clearField(){
     }
 }
 
-function redrawField()
+function redrawField(resetUpdate)
 {
     for (var i = 0; i < arrayOfFullBlocks.length; i++) {
         currBlock = arrayOfFullBlocks[i];
         drawBlock(currBlock);
-        currBlock.upDated = false;
+        if (resetUpdate)
+        {
+            currBlock.upDated = false;
+        }
     }
 }
 
 drawField();
 
-function loopAnimation(currBlock, direction) {
-    var oldPos;
-    switch (direction)
+function loopAnimation(arrayToMove, direction) {
+    for (var j = 0; j < arrayToMove.length; j++)
     {
-        case "left":
-        case "right" :
-            oldPos = currBlock.xPos;
-            break;
-        case "up":
-        case "down" :
-            oldPos = currBlock.yPos;
-            break;
+        var currBlock = arrayToMove[j];
+        var oldPos;
+        switch (direction)
+        {
+            case "left":
+                oldPos = currBlock.xPos;
+                break;
+            case "right" :
+                oldPos = currBlock.xPos;
+                break;
+            case "up":
+                oldPos = currBlock.yPos;
+                break;
+            case "down" :
+                oldPos = currBlock.yPos;
+                break;
+        }
+        
+        for (var i = 0; i < 5; i++) {
+            setTimeout(function() {
+                animate(currBlock, direction)
+            }, 20*i);
+        }
+        setTimeout(function() {resetLocation(currBlock,oldPos,direction)},120);
     }
-    
-    for (var i = 0; i < 5; i++) {
+
+    if (arrayToMove.length > 0) {
+        for (var k = 0; k < 5; k++) {
+            setTimeout(function() {
+                drawField()
+            }, 20*k);
+        }
         setTimeout(function() {
-            animate(currBlock, direction)
-        }, 20*i);
+            clearField();
+            redrawField(false);
+        },120);
     }
-    setTimeout(function() {resetLocation(currBlock,oldPos,direction)},120);
 }
 
 function animate(currBlock, direction) {
     eraseBlock(currBlock);
     updateLocation(currBlock, direction);
-    drawField();
     drawBlock(currBlock);
 }
 
@@ -354,10 +369,14 @@ function resetLocation(currBlock, oldPos, direction)
     switch (direction)
     {
         case "left":
+            currBlock.xPos = oldPos;
+            break;
         case "right" :
             currBlock.xPos = oldPos;
             break;
         case "up":
+            currBlock.yPos = oldPos;
+            break;
         case "down" :
             currBlock.yPos = oldPos;
             break;
