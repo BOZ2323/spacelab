@@ -350,16 +350,16 @@ function updateLocation(currBlock, direction)
     switch(direction)
     {
         case "left" :
-            currentBlock.xPos = currBlock.xPos - 20;
+            currBlock.xPos = currBlock.xPos - 20;
             break;
         case "right" :
-            currentBlock.xPos = currBlock.xPos + 20;
+            currBlock.xPos = currBlock.xPos + 20;
             break;
         case "up" :
-            currentBlock.yPos = currBlock.yPos - 20;
+            currBlock.yPos = currBlock.yPos - 20;
             break;
         case "down" :
-            currentBlock.yPos = currBlock.yPos + 20;
+            currBlock.yPos = currBlock.yPos + 20;
             break;
     }
 }
