@@ -1,36 +1,60 @@
+// const express = require('express')
+// const highScoreService = require('./services/highScore-service')
+// const bodyParser = require('body-parser')
+// const app = express()
+
+// app.get('/', async(req, res, next) => {
+//     res.render('index')
+//         // res.sendFile(__dirname + '/index.html')
+//         // res.send(await PersonService.findAll())
+// })
+// app.get('/highScore/all', async(req, res, next) => {
+//     const scores = await highScoreService.findAll()
+//     res.render('highScore', { scores })
+
+// })
+
+// app.use(bodyParser.json())
+
+// app.post('/highScore', async(req, res, next) => {
+//     const highScore = await highScoreService.add(req.body)
+//     console.log(req.body)
+//     res.send(highScore)
+// })
+// app.delete('/highScore/:highScoreId', async(req, res, next) => {
+//     await highScoreService.del(req.params.highScoreId)
+//     res.send('ok')
+// })
+
+
+// app.set('view engine', 'pug')
+
+// app.listen(3000, () => {
+//     console.log('Juhuuu! Server listening.')
+// })
+//***************************** */
 const express = require('express')
-const highScoreService = require('./services/highScore-service')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+
+require('./database-connection')
+
 const app = express()
 
-app.get('/', async(req, res, next) => {
-    res.render('index')
-        // res.sendFile(__dirname + '/index.html')
-        // res.send(await PersonService.findAll())
-})
-app.get('/highScore/all', async(req, res, next) => {
-    const scores = await highScoreService.findAll()
-    res.render('highScore', { scores })
-
-})
-
 app.use(bodyParser.json())
-
-app.post('/highScore', async(req, res, next) => {
-    const highScore = await highScoreService.add(req.body)
-    console.log(req.body)
-    res.send(highScore)
-})
-app.delete('/highScore/:highScoreId', async(req, res, next) => {
-    await highScoreService.del(req.params.highScoreId)
-    res.send('ok')
-})
-
-
+app.use(cookieParser())
 app.set('view engine', 'pug')
 
+const highScore = require('./routes/highScore')
+
+app.use('/highScore', highScore)
+
+app.get('/', (req, res, next) => {
+    res.render('index')
+})
+
 app.listen(3000, () => {
-    console.log('Juhuuu! Server listening.')
+    console.log('Juhuuuu! Server listening.')
 })
 
 // ******************* ****** **************** **************************
