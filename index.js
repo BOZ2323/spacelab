@@ -1,38 +1,3 @@
-// const express = require('express')
-// const highScoreService = require('./services/highScore-service')
-// const bodyParser = require('body-parser')
-// const app = express()
-
-// app.get('/', async(req, res, next) => {
-//     res.render('index')
-//         // res.sendFile(__dirname + '/index.html')
-//         // res.send(await PersonService.findAll())
-// })
-// app.get('/highScore/all', async(req, res, next) => {
-//     const scores = await highScoreService.findAll()
-//     res.render('highScore', { scores })
-
-// })
-
-// app.use(bodyParser.json())
-
-// app.post('/highScore', async(req, res, next) => {
-//     const highScore = await highScoreService.add(req.body)
-//     console.log(req.body)
-//     res.send(highScore)
-// })
-// app.delete('/highScore/:highScoreId', async(req, res, next) => {
-//     await highScoreService.del(req.params.highScoreId)
-//     res.send('ok')
-// })
-
-
-// app.set('view engine', 'pug')
-
-// app.listen(3000, () => {
-//     console.log('Juhuuu! Server listening.')
-// })
-//***************************** */
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -57,7 +22,12 @@ app.listen(3000, () => {
     console.log('Juhuuuu! Server listening.')
 })
 
-// ******************* ****** **************** **************************
+
+
+
+//************
+
+
 // function drawField() {
 //     var c = document.getElementById("myCanvas");
 //     var ctx = c.getContext("2d");
@@ -281,7 +251,7 @@ app.listen(3000, () => {
 //                 break;
 //         }
 
-//         // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
+//         //         // if the block cannot move right, either because there is a NULL or because the space is already full, meaning the block is in the arrayOfFullBlocks
 
 //         if (currentBlockMove === null || (arrayOfFullBlocks.indexOf(currentBlockMove) !== -1 && currentBlockMove.img !== currentBlock.img)) {
 //             //if it is null, or it is in the arrayOfFullBlocks and the number of currentBlockMove is not the same images

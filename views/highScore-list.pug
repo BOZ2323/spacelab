@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h1 Hello!
+    if scores.length
+        p Here are the scores:
+        table
+            thead
+                td ID
+                td Name
+                td Age
+            each highScore in scores
+                tr
+                    td #{highScore.id}
+                    td #{highScore.name}
+                    td #{highScore.age}
+
+        pre= JSON.stringify(scores, null, 2)
+    else
+        p There's no one yet :(
+    script.
+        console.log(!{JSON.stringify(scores)})

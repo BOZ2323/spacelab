@@ -8,7 +8,7 @@ router.get('/', async(req, res, next) => {
 })
 
 router.get('/all', async(req, res, next) => {
-    const people = await HighScoreService.findAll()
+    const scores = await HighScoreService.findAll()
     res.render('highScore-list', { scores })
 })
 

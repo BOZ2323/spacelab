@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    if highScore
+        h1 Hello #{highScore.name}!
+        p Here are your full details:
+        pre= JSON.stringify(highScore, null, 2)
+    else
+        h1 There's no such highScore!
+    script.
+        console.log(!{JSON.stringify(highScore)})
