@@ -4,8 +4,15 @@ const router = express.Router()
 const HighScoreService = require('../services/highScore-service')
 
 router.get('/', async(req, res, next) => {
-    res.send(await HighScoreService.findAll())
-})
+        res.send(await HighScoreService.findAll())
+    })
+    //***************** */
+    // router.get('/congrats', async(req, res, next) => {
+    //     res.render(await 'congrats', { title: 'congrats!' });
+    // });
+
+
+//*************** */
 
 router.get('/all', async(req, res, next) => {
     const scores = await HighScoreService.findAll()
@@ -29,11 +36,19 @@ router.post('/:highScoreId/team', async(req, res, next) => {
 })
 
 router.post('/', async(req, res, next) => {
-    const highScore = await HighScoreService.add(req.body)
+        const highScore = await HighScoreService.add(req.body)
 
-    res.send(highScore)
-})
+        res.send(highScore)
 
+    })
+    //***************************************** */
+    // router.post('/', async(req, res, next) => {
+    //         const nickName = await nickName.add(req.body)
+    //         console.log("got nickname", req.body)
+    //         res.send(highScore)
+
+//     })
+//****************************************** */
 router.delete('/:id', async(req, res, next) => {
     await HighScoreService.del(req.params.id)
 

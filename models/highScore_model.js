@@ -32,5 +32,3 @@ const HighScoreSchema = mongoose.Schema({
 })
 HighScoreSchema.plugin(AutoIncrement, { inc_field: 'id' })
 module.exports = mongoose.model('highScore', HighScoreSchema)
-
-//***************** */

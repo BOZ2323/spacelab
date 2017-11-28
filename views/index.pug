@@ -2,3 +2,13 @@ extends layout
 
 block content
     h1 start Spacelab!
+    //***********************
+
+    <form action="/submit" method="post">
+        <div class="input">
+            <label for="nickname">Nickname</label>
+            <input type="text" id="nickname" name="nickname">
+        </div>
+        
+        <button type="submit">Sign up</button>
+    </form>
