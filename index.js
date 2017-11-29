@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const expressValidator = require('express-validator') //Mozilla Devs suggested this
 const cookieParser = require('cookie-parser')
 
 require('./database-connection')
@@ -7,7 +8,10 @@ require('./database-connection')
 const app = express()
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false })) //Mozilla Devs suggested this in addition: ({ extended: false }))
 app.use(cookieParser())
+    // app.use(expressValidator()) //Mozilla Devs suggested this
+
 app.set('view engine', 'pug')
 
 const highScore = require('./routes/highScore')
