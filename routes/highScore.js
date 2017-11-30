@@ -31,17 +31,18 @@ router.post('/:highScoreId/team', async(req, res, next) => {
     res.send(updatedHighScore)
 })
 
+// router.post('/', async(req, res, next) => {
+//         const highScore = await HighScoreService.add(req.body)
+
+//         res.send(highScore)
+
+//     })
+//***************************************** */
 router.post('/', async(req, res, next) => {
         const highScore = await HighScoreService.add(req.body)
-
-        res.send(highScore)
-
-    })
-    //***************************************** */
-router.post('/', async(req, res, next) => {
-        const nickName = await highScore.add(req.body)
         console.log("got nickname", req.body)
-        res.send(highScore)
+            // res.send(highScore)
+        res.render('highScore-detail', { highScore })
     })
     //****************************************** */
 router.delete('/:id', async(req, res, next) => {

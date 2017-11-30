@@ -25,10 +25,14 @@ const HighScoreSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    team: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'highScore' //here you can create relationships between anmimals, furniture, kings etc.
-    }]
+    // team: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'highScore' //here you can create relationships between anmimals, furniture, kings etc.
+    // }],
+    create_date: {
+        type: Date,
+        default: Date.now
+    }
 })
 HighScoreSchema.plugin(AutoIncrement, { inc_field: 'id' })
 module.exports = mongoose.model('highScore', HighScoreSchema)

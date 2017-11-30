@@ -1,23 +1,32 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const expressValidator = require('express-validator') //Mozilla Devs suggested this
+const expressValidator = require('express-validator') //Moz Devs 
 const cookieParser = require('cookie-parser')
+const path = require('path') //Moz Devs 
 
 require('./database-connection')
 
 const app = express()
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false })) //Mozilla Devs suggested this in addition: ({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false })) //Moz Devs 
 app.use(cookieParser())
-    // app.use(expressValidator()) //Mozilla Devs suggested this
+app.use(express.static(path.join(__dirname, 'public'))) //Moz Devs 
+    // app.use(expressValidator()) //Moz Devs 
 
 app.set('view engine', 'pug')
 
 const highScore = require('./routes/highScore')
 
-app.use('/highScore', highScore)
+app.use('/highScore', highScore) //here are particular routes for different parts of the site defined
+    //********* */
+const you = require('./routes/you')
 
+app.use('/you', you)
+
+
+
+//************* */
 app.get('/', (req, res, next) => {
     res.render('index')
 })
