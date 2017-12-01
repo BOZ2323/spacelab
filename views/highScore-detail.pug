@@ -3,7 +3,7 @@ extends layout
 block content
     if highScore
         h1 Hello #{highScore.name}!
-        p Here are your full details:
+        p Whooow, you are fast!
         pre= JSON.stringify(highScore, null, 2)
     else
         h1 There's no such highScore!
